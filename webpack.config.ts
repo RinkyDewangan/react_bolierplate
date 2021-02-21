@@ -19,14 +19,20 @@ const webpackConfig = (env): Configuration => ({
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
-                loader: "ts-loader",
+              test: /\.(ts|js)x?$/,
+              exclude: [/node_modules/,/dist/],
+              use: {
+                loader: "babel-loader",
                 options: {
-                    transpileOnly: true
+                  presets: [
+                    "@babel/preset-env",
+                    "@babel/preset-react",
+                    "@babel/preset-typescript",
+                  ],
                 },
-                exclude: /dist/
-            }
-        ]
+              },
+            },
+          ],
     },
     plugins: [
         new HtmlWebpackPlugin({

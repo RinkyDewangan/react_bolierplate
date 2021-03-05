@@ -1,0 +1,46 @@
+.jumbotron2 {
+    background-color:#232323;
+    height: auto;
+    position: relative;
+}
+
+.footer-title1{
+    color:#F65261;
+    font-weight: 900;
+    font-size: 20px;
+    padding-left: 50px; 
+}
+
+.footer-title2{
+    color:#F65261;
+    font-size: 20px;
+    text-align: center;
+    
+}
+
+.footer-row{
+    position: absolute;
+    bottom:0;
+    background-color: gray;
+    width: 100%;
+    text-align: center;
+    height: 50px;
+}
+
+.movie-app > .row {
+	overflow-x: auto;
+	flex-wrap: nowrap;
+}
+
+.nav-bar-style {
+    width: 75%
+}
+
+.text-style {
+    color: grey;
+    margin-right: 10px;
+}
+
+.nav-text-style {
+    color: white;
+}

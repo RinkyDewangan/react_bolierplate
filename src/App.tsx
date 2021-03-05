@@ -1,6 +1,6 @@
 import React from "react";
-import UserComponent from "components/User";
+import HomePage from "components/MovieApp/homePage";
 
-const App = ():JSX.Element => <UserComponent userName='Peter' profile='Software Developer' isActive={false} />;
+const App = ():JSX.Element => <HomePage />;
 
 export default App;

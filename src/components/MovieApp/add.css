@@ -1,0 +1,49 @@
+.modal-custom {
+    width: 100%;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    background-color:#232323;
+    height: auto;
+}
+
+.input-type {
+    height: 50px;
+    background-color:#2E2E2E;
+    width: 450px;
+}
+
+.add-movie-text {
+    color: white;
+    margin-left: 120px;
+    font-size: 50px;
+    font-weight: 100;
+    margin-bottom: 10px;
+}
+
+.input-title-text{
+    color:#BD4650;
+    margin-top: 5px;
+}
+
+.button-text-right {
+    text-align: right;
+}
+
+.button-text-left {
+    text-align: left;
+}
+
+.button-style {
+    background-color:#232323;
+    width: 150px;
+    height: 50px;
+    font-size: 20px;
+    color:#BD4650;
+}
+
+.topright {
+    position: relative;
+    top: 8px;
+    font-size: 18px;
+    color: red;
+}

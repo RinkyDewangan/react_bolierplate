@@ -1,12 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
-import { Collapse, DropdownItem, DropdownMenu, DropdownToggle, Nav, Navbar, NavbarText, NavbarToggler, NavItem, NavLink, UncontrolledDropdown } from "reactstrap";
+import React, { ReactNode, useState } from "react";
+import { Collapse, Nav, Navbar, NavbarText, NavbarToggler, NavItem, NavLink } from "reactstrap";
 import './display.css'
 
-export const NavController = (): JSX.Element => { 
-    const [isOpen, setIsOpen] = useState(false);
+const arrayMap = [
+  {key : "TYPE", value : "Type"},
+  {key : "RELEASE DATE", value : "Year"},
+  {key : "TITLE", value : "Title"},
+]
 
+interface Props {
+  children?: ReactNode;
+  sortProp?:string;
+  handler?:any;
+}
+
+export const NavController = (props:Props): JSX.Element => { 
+    const [isOpen, setIsOpen] = useState(false);
+    
     const toggle = () => setIsOpen(!isOpen);
+
     return(
     <Navbar expand="md">
     <NavbarToggler onClick={toggle} />
@@ -29,19 +42,11 @@ export const NavController = (): JSX.Element => {
         </NavItem>
       </Nav>
       <NavbarText className='text-style'>SORT BY</NavbarText>
-      <UncontrolledDropdown >
-          <DropdownToggle>
-            RELEASE DATE
-          </DropdownToggle>
-          <DropdownMenu right>
-            <DropdownItem>
-              TITLE
-            </DropdownItem>
-            <DropdownItem>
-              TYPE
-            </DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
+        <select value={props.sortProp} onChange={props.handler}>
+            {arrayMap.map((val, index) => (
+              <option value={val.value} key={index}>{val.key}</option>
+            ))}
+        </select>
     </Collapse>
   </Navbar>
 )}

@@ -1,9 +1,9 @@
 
-
-import React, { Component } from "react";
+import React from "react";
+import './display.css';
 import { Row, Col} from 'reactstrap';
 
-class Footer extends Component{
+class Footer extends React.Component{
   render(): JSX.Element {
     return (
       <Row className="footer-row">

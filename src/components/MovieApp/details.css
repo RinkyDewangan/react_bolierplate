@@ -1,0 +1,40 @@
+.movie-title-text {
+    font-size: 75px;
+    color: white;
+    font-weight: 50;
+}
+
+.movie-rating {
+    font-size: 50px;
+    color: white;
+    font-weight: 50;
+}
+
+.circle {
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+    padding: 17px;
+    background:black;
+    border: 1px solid white;
+    color: grey;
+    text-align: center;
+    font: 32px Arial, sans-serif;
+    margin-top: 25px;
+}
+
+.movie-text {
+  margin-left: 5px;
+  color:#8E8989;
+}
+
+.description{
+    margin-left: 5px;
+    color:white;
+    font-size: 15px;
+}
+
+.common-text {
+    color:#D94956;
+    font-size:30px;
+}

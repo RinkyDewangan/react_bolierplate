@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
-import { Row, Col, Button} from 'reactstrap';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { Row, Col, Button } from 'reactstrap';
 import './movies.css'
 import ListModal from './listModal'
+import MovieDetails from './movieDetails'
+import { movieList } from 'src/data/movieList';
 
 export interface Movie {
     Title: string;
@@ -10,6 +12,8 @@ export interface Movie {
     imdbID: string;
     Type: string;
     Poster: string;
+    Description: string;
+    Rating: number;
 }
 
 interface Props {
@@ -17,43 +21,53 @@ interface Props {
     onExit?: boolean;
     movies: Movie[];
     type?: string;
-    sortProp?:string;
+    sortProp?: string;
+    showDetails?: any;
+    children?: ReactNode;
+    onClickHandler?: any;
 }
-  
+
 interface State {
-    dropDownOpen : boolean;
+    dropDownOpen: boolean;
+    showDetails: boolean;
 }
 
-class MovieList extends React.Component<Props,State>{
-    constructor(props:Props){
-        super(props);
-        this.state = { dropDownOpen: false};
-    }
-    private handleEdit= (e) =>{
-        this.setState({ dropDownOpen: !this.state.dropDownOpen});
-    }
+const MovieList = (props: Props): JSX.Element => {
 
-    private sortedArray = (movieList,key) => {
+    // eslint-disable-next-line prefer-const
+    let [dropDownOpen,showDetails] = [false,false];
+  
+    const handleEdit = () => {
+        return dropDownOpen = !dropDownOpen;
+    };
+
+    const sortedArray = (movieList, key) => {
         return movieList.sort((a, b) => {
-            if(key === 'Year'){
+            if (key === 'Year') {
                 return parseInt(a[key]) - parseInt(b[key]);
             }
             return a[key] > b[key];
         });
     }
 
+    useEffect(() => {
+        if(props.sortProp !== "Year"){
+            sortedArray(props.movies,props.sortProp)
+        }
+      }, [props]);
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    render() {
-        return (
-            <Row className='container-fluid'>
-			{this.sortedArray(this.props.movies,this.props.sortProp).map((movie, index) => (
+    return (
+        <Row className='container-fluid'>
+            {props.children}
+            {movieList.map((movie, index) => (
                 <React.Fragment key={index}>
-					<Col>
+                    <Col>
                         <Row>
                             <Col>
-                                <img src={movie.Poster} alt='movie'></img>  
-                                <Button className='topright' onClick={this.handleEdit}>&#8942;</Button>
-                                {this.state.dropDownOpen && <ListModal isOpen={this.state.dropDownOpen}/>}
+                                <img src={movie.Poster} alt='movie' onClick={()=>props.showDetails(!showDetails,movie)}>
+                                </img>
+                                <Button className='topright' onClick={()=>handleEdit()}>&#8942;</Button>
+                                {dropDownOpen && <ListModal isOpen={dropDownOpen} />}
                             </Col>
                             <Col>
                                 <span className='movie-text-style'>{movie.Title}</span>
@@ -64,9 +78,9 @@ class MovieList extends React.Component<Props,State>{
                         </Row>
                     </Col>
                 </React.Fragment>
-			))}
-            </Row>
-	   );
-    }
+            ))}
+        </Row>
+    );
+
 }
 export default MovieList;

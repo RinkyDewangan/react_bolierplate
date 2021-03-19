@@ -1,49 +1,51 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { Container, Jumbotron } from "reactstrap";
 import Footer from "./footer"
 import './display.css'
 import MovieList from './movieList'
-import {movieList} from '../../data/movieList'
+import { movieList } from '../../data/movieList'
 import NavController from './navComponent'
 import ErrorBoundary from "./errorBoundary";
 
 interface Props {
   children?: ReactNode;
   sortBy?: string;
+  showMovieDetails?: any;
+  showDetailsHandler?: any;
 }
 
 interface State {
   sortKey: string;
 }
 
-export default class DisplayComponent extends React.Component<Props, State,ReturnType<any>>{
-  constructor(props:Props) {
-    super(props);
-    this.state = { 
-       sortKey : "Year"
-    };
-    this.handler = this.handler.bind(this);
+export const DisplayComponent = (props: Props): JSX.Element => {
+
+  const [sortKey, keyHandler] = useState("Year");
+
+  const handler = (e) => keyHandler(e.target.value);
+  
+  const showDetailsHandler = (status,movie) => {
+    props.showMovieDetails(status,movie)
   }
 
-  handler(e) {
-    this.setState({
-      sortKey: e.target.value
-    })
-  }
-
-  render(){
-    return(
+  return (
+    <ErrorBoundary>
     <Jumbotron fluid className="jumbotron2">
       <Container fluid>
-        <NavController sortProp={this.state.sortKey} handler={this.handler}/>
+        <NavController sortProp={sortKey} handler={(e) => handler(e)} />
         <ErrorBoundary>
-          <MovieList movies={movieList} sortProp={this.state.sortKey}/>
-        </ErrorBoundary> 
+          {props.children}
+          <MovieList movies={movieList} sortProp={sortKey} showDetails={showDetailsHandler}
+          />
+        </ErrorBoundary>
       </Container>
-      <Footer/>
+      <Footer />
     </Jumbotron>
-    )
-    }
+    </ErrorBoundary>
+  )
+
 }
+
+export default DisplayComponent;

@@ -4,6 +4,12 @@ import React, { ReactNode } from 'react';
 import { Col, Row, Button, Form, FormGroup, Input} from 'reactstrap';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './add.css'
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
+import {addMoviesAction} from '../../actions/movieActions';
+import {
+    GetMoviesAddStateType,
+} from '../../types/movieTypes';
 
 interface Props {
     children?: ReactNode;
@@ -23,7 +29,7 @@ interface State {
    type: string,
 }
 
-export default class AddMovie extends React.Component<Props, State,ReturnType<any>>{
+export class AddMovie extends React.Component<Props, State,ReturnType<any>>{
   constructor(props:Props) {
     super(props);
     this.state = { 
@@ -115,3 +121,19 @@ export default class AddMovie extends React.Component<Props, State,ReturnType<an
   );
   }
 }
+
+const actions: any = Object.assign({}, addMoviesAction);
+function mapStateToProps(state: GetMoviesAddStateType) {
+  return {
+    movie: state.movie
+  };
+}
+function mapDispatchToProps(dispatch: Dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddMovie);

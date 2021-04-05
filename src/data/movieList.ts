@@ -1,6 +1,6 @@
 import {Movie} from '../components/MovieApp/movieList';
 
-export const movieList:Movie[] = [
+export const movieList = [
       {
         "Title": "Star Wars: Episode IV - A New Hope",
         "Year": "1977",

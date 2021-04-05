@@ -1,8 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, { ReactNode } from 'react';
+import React, { ReactNode, ReactPropTypes } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter , Button} from 'reactstrap';
+import { GetMoviesDeleteStateType } from 'src/types/movieTypes';
 import './add.css'
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
+import { deleteMoviesAction } from 'src/actions/movieActions';
+import { deleteMovieFromList } from 'src/effects/movieEffects';
 
 interface Props {
     children?: ReactNode;
@@ -11,11 +16,17 @@ interface Props {
     type?: string;
 }
 
-export default class DeleteMovie extends React.Component<Props,ReturnType<any>>{
+export class DeleteMovie extends React.Component<Props,ReturnType<any>>{
+  constructor(props)
+  {
+    super(props);
+  }
  
   private onDelete = (event: React.FormEvent<HTMLButtonElement>): void=> {
        alert('movie deleted...')
+       deleteMovieFromList(event.currentTarget.id); 
   }
+  
 
   render(){
   return (
@@ -31,3 +42,19 @@ export default class DeleteMovie extends React.Component<Props,ReturnType<any>>{
   );
   }
 }
+
+const actions: any = Object.assign({}, deleteMoviesAction);
+function mapStateToProps(state: GetMoviesDeleteStateType) {
+  return {
+    id: state.id
+  };
+}
+function mapDispatchToProps(dispatch: Dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DeleteMovie);

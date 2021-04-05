@@ -3,7 +3,12 @@
 import React, { ReactNode } from 'react';
 import { Col, Row, Button, Form, FormGroup, Input} from 'reactstrap';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { editMoviesAction } from 'src/actions/movieActions';
+import { GetMoviesEditStateType } from 'src/types/movieTypes';
 import './add.css'
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
+import { editMovieToList } from 'src/effects/movieEffects';
 
 interface Props {
     children?: ReactNode;
@@ -21,7 +26,7 @@ interface State {
    genre: string,
 }
 
-export default class EditMovie extends React.Component<Props, State,ReturnType<any>>{
+export class EditMovie extends React.Component<Props, State,ReturnType<any>>{
   baseState: Readonly<State>;
   constructor(props:Props) {
     super(props);
@@ -46,6 +51,7 @@ export default class EditMovie extends React.Component<Props, State,ReturnType<a
 
   private onSubmit = (event: React.FormEvent<HTMLButtonElement>): void=> {
     alert('movie updated succesfully...')
+    editMovieToList(event.currentTarget.id)
   }
 
   private onReset = (event: React.FormEvent<HTMLButtonElement>): void=> {
@@ -112,3 +118,20 @@ export default class EditMovie extends React.Component<Props, State,ReturnType<a
   );
   }
 }
+
+
+const actions: any = Object.assign({}, editMoviesAction);
+function mapStateToProps(state: GetMoviesEditStateType) {
+  return {
+    movie: state.id
+  };
+}
+function mapDispatchToProps(dispatch: Dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditMovie);
